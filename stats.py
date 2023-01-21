@@ -1,6 +1,5 @@
 import argparse
 import warnings
-import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("list", help="enter a comma separated list of \
@@ -8,8 +7,6 @@ parser.add_argument("list", help="enter a comma separated list of \
 args = parser.parse_args()
 
 values = args.list
-
-print(values)
 
 '''
 Why does this work?
@@ -21,23 +18,42 @@ warnings.warn()
 warnings.formatwarning is called by warnings.warn
 '''
 
-
+vals_list = []
 for x in values.split(','):
 	try:
 		x = float(x)
-		print(x)
+		vals_list.append(x)
 	except ValueError as e:
-		warnings.warn(f'{e}', stacklevel=2)
-		#warnings.formatwarning()
-		#warnings.warn("\'" + x + "\'" + " is not a number", stacklevel=2)
-		# warning vs exception?
-		# what is writing a warning to a file? the file defaults to sys.stderr
-		# print(f'{e}')
+		warnings.warn(f'{e}', category=Warning, stacklevel=2)
 
-#sys.stderr.write("al;dfja")
-#print(file=sys.stderr)
+print('input: ', vals_list)
 
+sorted_vals = sorted(vals_list)
 
+print('sorted: ', sorted_vals)
+
+total = 0
+for n in sorted_vals:
+	total += n
+
+mean = total/len(sorted_vals)
+
+if len(sorted_vals)%2 == 0:
+	mid = len(sorted_vals)/2
+	mid = int(mid)
+	median = (sorted_vals[mid-1] + sorted_vals[mid])/2
+else:
+	mid = (len(sorted_vals)-1)/2
+	mid = int(mid)
+	median = sorted_vals[mid]
+
+total = 0
+for n in sorted_vals:
+	total += (n - mean) ** 2
+var = total/len(sorted_vals)
+stdev = var ** (1/2)
+
+print('mean: ', mean, 'median: ', median, 'stdev: ', stdev)
 
 
 
