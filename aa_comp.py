@@ -7,25 +7,29 @@ args = parser.parse_args()
 fasta = args.fasta
 
 # only works with uppercase letters ACTG
-seq = ''
-for line in fasta.readlines():
-	if line.startswith('>'): continue
-	line = line.rstrip()
-	seq += line
 
-aa_comp = {
-	'A': 0,
-	'C': 0,
-	'T': 0,
-	'G': 0
-}
+def get_aa_comp(fasta):
 
-total = 0
-for aa in seq:
-	aa_comp[aa] += 1
-	total += 1
+	seq = ''
+	for line in fasta.readlines():
+		if line.startswith('>'): continue
+		line = line.rstrip()
+		seq += line
 
-for aa in aa_comp:
-	aa_comp[aa] = round(aa_comp[aa]/total, 2)
+	aa_comp = {
+		'A': 0,
+		'C': 0,
+		'T': 0,
+		'G': 0
+	}
 
-print(aa_comp)
+	total = 0
+	for aa in seq:
+		aa_comp[aa] += 1
+		total += 1
+
+	for aa in aa_comp:
+		aa_comp[aa] = round(aa_comp[aa]/total, 2)
+
+	return aa_comp
+
