@@ -33,7 +33,7 @@ for i in range(len(seq3)):
 		'A': 0, 'C': 0, 'G': 0, 'T': 0,
 	}
 	for j in seq3[i:win+i]:
-		freq[j] += 1
+		raw_counts[j] += 1
 	print(raw_counts)
 	print(seq3[i:win+i])
 
