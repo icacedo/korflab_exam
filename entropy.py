@@ -20,21 +20,28 @@ n = args.window_size
 seq1 = 'AGCCTAAGCCTAAGCCTAAGCCTAAGCCTAAGCCTAAGCC'
 seq2 = 'ATTCTCGTAGATCAAACCGAAATGGGACATTCTGACACCA'
 seq3 = 'ATCCGCGTAA'
-#use log 2
-print(math.log(8,2))
 
-win = 3
-
+win = 4
+# only look at local
 for i in range(len(seq3)):
 	if len(seq3[i:win+i]) < win: 
 		continue
-		
-	raw_counts = {
+
+	freq = {
 		'A': 0, 'C': 0, 'G': 0, 'T': 0,
 	}
 	for j in seq3[i:win+i]:
-		raw_counts[j] += 1
-	print(raw_counts)
+		freq[j] += 1/win
+	
+	H = 0
+	for k in freq:
+		if freq[k] == 0:
+			p = -math.inf
+		else:
+			p = freq[k]
+			H += p*math.log(p,2)
+	print(H)
 	print(seq3[i:win+i])
+
 
 
